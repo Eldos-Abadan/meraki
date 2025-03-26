@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "http://127.0.0.1:8000/"
+    volumes:
+      - ./backend:/back
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./meraki-frontend
+    ports:
+      - "http://localhost:3000/"
+    volumes:
+      - ./meraki-frontend:/meraki-frontend
+      - /meraki-frontend/node_modules
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

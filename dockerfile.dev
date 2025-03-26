@@ -1,0 +1,13 @@
+FROM python:3.9
+WORKDIR /app
+
+# Django орнату
+COPY backend/requirements.txt .
+RUN pip install -r requirements.txt
+
+# Node.js орнату (React үшін)
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+EXPOSE 8000 3000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
